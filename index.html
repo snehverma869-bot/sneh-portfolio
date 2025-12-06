@@ -420,20 +420,26 @@ input, textarea {
 .home__image {
   animation: fadeInRight 1s ease-out;
 }
-
 .home__blob {
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  position: relative;
+    position: relative;
+    width: 200px;
+    height: 200px;
 }
 
 .home__blob svg {
-  width: 100%;
-  fill: var(--primary-color);
-  opacity: 0.1;
-  animation: float 6s ease-in-out infinite;
+    width: 100%;
 }
+
+.home__img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;    /* Adjust as you like */
+    height: 120px;   /* Adjust as you like */
+    object-fit: cover;
+    border-radius: 50%;   /* Makes image circular */
+    transform: translate(-50%, -50%);
+
 
 .home__img {
   position: absolute;
@@ -2305,4 +2311,5 @@ console.log('%c👋 Hello! Welcome to my portfolio!', 'color: #6366f1; font-size
 console.log('%cBuilt with ❤️ by Sneh Verma', 'color: #10b981; font-size: 14px;');
 
 </script>
+
 
