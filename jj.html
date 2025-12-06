@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LearnHub – Role Selection</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    .back-btn{
+  padding:10px 25px;
+  font-size:16px;
+  font-weight:600;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  background:linear-gradient(45deg,#c49255,#a54768);
+  color:white;
+  margin:10px 0 20px;
+  transition:0.3s;
+}
+.back-btn:hover{
+  transform:scale(1.08);
+  box-shadow:0 6px 18px rgba(255,100,100,0.5);
+}
+
+/* ---------- GLOBAL ---------- */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Poppins',sans-serif;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  transition:0.4s;
+  background: linear-gradient(-45deg,#ee7752,#c0567e,#75c0db,#84c0b2);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+@keyframes gradientBG{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+header{
+  padding:20px;
+  text-align:center;
+  font-size:28px;
+  font-weight:700;
+  color:#fff;
+  width:100%;
+  background: linear-gradient(90deg,#6a11cb,#3665b6);
+  box-shadow:0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* ---------- ROLE BUTTONS ---------- */
+button.role-btn{
+  padding:20px 50px;
+  margin:30px;
+  font-size:24px;
+  font-weight:700;
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+  color:white;
+  background:linear-gradient(45deg,#8453ba,#4972b9);
+  transition:0.3s;
+}
+button.role-btn:hover{
+  animation: bounce 0.5s;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+@keyframes bounce{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+}
+
+/* ---------- CONTAINERS ---------- */
+.hidden{display:none;}
+.container{width:90%; max-width:1200px; margin:20px auto; animation: fadeIn 0.8s;}
+@keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
+
+/* ---------- COURSE CARDS ---------- */
+.course-container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+  padding:20px;
+}
+.course-card{
+  perspective:1000px;
+  position:relative;
+}
+.course-card-inner{
+  position:relative;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+.course-card:hover .course-card-inner{
+  transform: rotateY(180deg);
+}
+.course-card-front, .course-card-back{
+  position:absolute;
+  width:100%;
+  backface-visibility:hidden;
+  border-radius:16px;
+  overflow:hidden;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+  transition:0.5s;
+  padding-bottom:20px;
+}
+.course-card-front{
+  display:flex;
+  flex-direction:column;
+  position:relative;
+}
+/* ---------- GLITTER EFFECT ---------- */
+.course-card-front::after {
+    content:"";
+    position:absolute;
+    top:0; left:0; width:100%; height:100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+    transform: skewX(-20deg) translateX(-100%);
+    pointer-events:none;
+    animation: glitter 3s infinite;
+    border-radius:16px 16px 0 0;
+}
+@keyframes glitter {
+    0% { transform: skewX(-20deg) translateX(-100%); }
+    100% { transform: skewX(-20deg) translateX(200%); }
+}
+
+.course-card-back{
+  transform: rotateY(180deg);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:bold;
+  color:#fff;
+  font-size:16px;
+  text-align:center;
+}
+.course-img{width:100%; height:160px; object-fit:cover; transition:0.5s; border-radius:16px 16px 0 0;}
+.course-card:hover .course-img{transform:scale(1.08);}
+.level-badge{position:absolute; top:12px; left:12px; background:#6a11cb; color:white; font-size:12px; font-weight:600; padding:5px 10px; border-radius:12px;}
+button.enroll-btn{background:linear-gradient(45deg,#28a745,#20c997); color:white; padding:10px; margin:10px 5px; border:none; border-radius:10px; font-weight:600; cursor:pointer; transition:0.3s;}
+button.enroll-btn:hover{transform:scale(1.08); box-shadow:0 6px 18px rgba(40,167,69,0.6);}
+button.delete-btn{background:#ff4a4a; color:white; padding:10px; margin:10px 5px; border:none; border-radius:10px; font-weight:600; cursor:pointer; transition:0.3s;}
+button.delete-btn:hover{transform:scale(1.08); box-shadow:0 6px 18px rgba(255,74,74,0.6);}
+
+/* ---------- POPUP ---------- */
+.popup-overlay{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,0.5);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:2000;
+}
+.popup-box{
+  width:360px;
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(15px);
+  padding:25px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  text-align:center;
+  animation: scaleIn 0.4s ease;
+}
+@keyframes scaleIn{0%{transform:scale(0.7); opacity:0;} 100%{transform:scale(1); opacity:1;}}
+.popup-box input, .popup-box select{width:100%; padding:12px; margin:10px 0; border-radius:12px; border:1px solid #ccc;}
+.popup-box button{padding:12px; border-radius:12px; border:none; cursor:pointer; margin-top:10px; font-weight:600;}
+.confirm-btn{background:linear-gradient(45deg,#28a745,#20c997); color:white;}
+.close-btn{background:#ff4a4a; color:white;}
+
+/* ---------- TOAST ---------- */
+.toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%) translateY(50px);
+  background:linear-gradient(45deg,#28a745,#20c997);
+  color:white;
+  padding:12px 25px;
+  border-radius:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:all 0.5s;
+  z-index:3000;
+}
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+</style>
+</head>
+<body>
+<header>LearnHub – Online Courses</header>
+<a  href="index.html" class="back-btn">⬅ Back to project</a>
+
+<!-- ROLE SELECTION -->
+<div id="roleSelection" class="container">
+  <button class="role-btn" onclick="showPanel('user')">User</button>
+  <button class="role-btn" onclick="showPanel('admin')">Admin</button>
+</div>
+
+<!-- USER PANEL -->
+<div id="userPanel" class="container hidden">
+  <h2 style="text-align:center;">Browse Courses</h2>
+  <div class="course-container" id="userCourses"></div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="container hidden">
+  <h2 style="text-align:center;">Admin Dashboard</h2>
+  <div class="admin-box">
+    <input type="text" id="courseTitle" placeholder="Course Title">
+    <select id="courseLevel">
+      <option value="Beginner">Beginner</option>
+      <option value="Intermediate">Intermediate</option>
+      <option value="Advanced">Advanced</option>
+    </select>
+    <input type="text" id="courseImage" placeholder="Image URL">
+    <button onclick="addCourse()">Add Course</button>
+  </div>
+  <div class="course-container" id="adminCourses"></div>
+</div>
+
+<!-- POPUP -->
+<div id="popup" class="popup-overlay">
+  <div class="popup-box">
+    <h3 id="popupCourseName"></h3>
+    <input type="text" id="userName" placeholder="Enter your name">
+    <input type="email" id="userEmail" placeholder="Enter your email">
+    <select id="paymentMethod">
+      <option value="">Select Payment Method</option>
+      <option>Credit / Debit Card</option>
+      <option>JazzCash</option>
+      <option>Easypaisa</option>
+      <option>Google Pay</option>
+      <option>PayPal</option>
+    </select>
+    <button class="confirm-btn" onclick="confirmEnrollment()">Confirm Enrollment</button>
+    <button class="close-btn" onclick="closePopup()">Cancel</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast">Enrollment Successful!</div>
+
+<script>
+// ---------- DATA ----------
+let courses = [
+  { title: "HTML Basics", level: "Beginner", image: "images/html.jpg" },
+  { title: "CSS Guide", level: "Beginner", image: "images/css.png" },
+  { title: "JavaScript", level: "Intermediate", image: "images/js.jpg" },
+  { title: "React Fundamentals", level: "Advanced", image: "images/react.jpg" },
+  { title: "Node.js Basics", level: "Intermediate", image: "images/node.jpg" },
+  { title: "Python for Beginners", level: "Beginner", image: "images/python.jpg" },
+  { title: "Data Structures", level: "Intermediate", image: "images/ds.jpg" },
+  { title: "Machine Learning", level: "Advanced", image: "images/ml.jpg" }
+];
+let enrolledCourses = [];
+let selectedCourse = "";
+
+// ---------- ROLE SWITCH ----------
+function showPanel(role){
+  document.getElementById('roleSelection').classList.add('hidden');
+  if(role==='user'){
+    document.getElementById('userPanel').classList.remove('hidden');
+    loadCourses('user');
+  }else{
+    document.getElementById('adminPanel').classList.remove('hidden');
+    loadCourses('admin');
+  }
+}
+
+// ---------- LOAD COURSES ----------
+function loadCourses(panel){
+  const container = panel==='user'? document.getElementById('userCourses') : document.getElementById('adminCourses');
+  container.innerHTML="";
+  courses.forEach((course,index)=>{
+    container.innerHTML+=`
+    <div class="course-card">
+      <div class="course-card-inner">
+        <div class="course-card-front">
+          <span class="level-badge">${course.level}</span>
+          <img src="${course.image}" class="course-img">
+          <h3>${course.title}</h3>
+        </div>
+        <div class="course-card-back">
+          ${panel==='user'? "Click Enroll to join!" : "Admin Controls Here!"}
+        </div>
+      </div>
+      ${panel==='user'? `<button class="enroll-btn" onclick="openPopup('${course.title}')">Enroll</button>` :
+      `<button class="delete-btn" onclick="deleteCourse(${index},'${panel}')">Delete</button>`}
+    </div>`;
+  });
+}
+
+// ---------- ADD / DELETE ----------
+function addCourse(){
+  const title = document.getElementById("courseTitle").value.trim();
+  const level = document.getElementById("courseLevel").value;
+  const image = document.getElementById("courseImage").value.trim();
+  if(!title||!image){ alert("Fill all fields"); return;}
+  courses.push({title,level,image});
+  loadCourses('admin');
+  document.getElementById("courseTitle").value="";
+  document.getElementById("courseImage").value="";
+}
+function deleteCourse(index,panel){ courses.splice(index,1); loadCourses(panel); }
+
+// ---------- ENROLLMENT ----------
+function openPopup(courseName){
+  selectedCourse = courseName;
+  document.getElementById("popupCourseName").innerText="Enroll in: "+courseName;
+  document.getElementById("popup").style.display="flex";
+}
+function closePopup(){ document.getElementById("popup").style.display="none"; }
+function confirmEnrollment(){
+  const name = document.getElementById("userName").value.trim();
+  const email = document.getElementById("userEmail").value.trim();
+  const payment = document.getElementById("paymentMethod").value;
+  if(!name || !email || !payment){ alert("Please fill all fields!"); return; }
+  const course = courses.find(c=>c.title===selectedCourse);
+  if(!enrolledCourses.includes(course)){ enrolledCourses.push(course); }
+  showToast("Enrollment Successful: "+selectedCourse);
+  closePopup();
+  document.getElementById("userName").value="";
+  document.getElementById("userEmail").value="";
+  document.getElementById("paymentMethod").value="";
+}
+
+// ---------- TOAST ----------
+function showToast(message){
+  const toast = document.getElementById("toast");
+  toast.innerText=message;
+  toast.classList.add("show");
+  setTimeout(()=>{ toast.classList.remove("show"); },3000);
+}
+function goBack(){
+  document.getElementById('userPanel').classList.add('hidden');
+  document.getElementById('adminPanel').classList.add('hidden');
+  document.getElementById('roleSelection').classList.remove('hidden');
+}
+
+</script>
+</body>
+</html>

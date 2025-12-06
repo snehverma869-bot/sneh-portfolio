@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.container > p {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.container > p a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+/* Slider Container */
+.slider-container {
+    position: relative;
+    margin: 0 auto;
+    max-width: 800px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Slider */
+.slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    flex: 0 0 100%;
+    position: relative;
+}
+
+.slide img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Slide Content */
+.slide-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+    color: white;
+}
+
+.slide-content h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+/* Navigation Buttons */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.slider-btn:hover {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.prev {
+    left: 1rem;
+}
+
+.next {
+    right: 1rem;
+}
+
+/* Dots Navigation */
+.slider-dots {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dot.active {
+    background: white;
+}
+
+/* Controls */
+.controls {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.control-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.speed-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#speed {
+    width: 100px;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .slide-content {
+        padding: 1rem;
+    }
+
+    .slide-content h2 {
+        font-size: 1.2rem;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Slider</h1>
+        <p><a href="index.html">← Back to projects</a></p>
+
+        <div class="slider-container">
+            <div class="slider">
+                <!-- Sample images - replace src with your own images -->
+                <div class="slide">
+                    <img src="https://picsum.photos/800/400?random=1" alt="Nature 1">
+                    <div class="slide-content">
+                        <h2>Beautiful Landscapes</h2>
+                        <p>Explore natural wonders</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://picsum.photos/800/400?random=2" alt="Nature 2">
+                    <div class="slide-content">
+                        <h2>Urban Adventures</h2>
+                        <p>Discover city life</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://picsum.photos/800/400?random=3" alt="Nature 3">
+                    <div class="slide-content">
+                        <h2>Mountain Views</h2>
+                        <p>Reach new heights</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://picsum.photos/800/400?random=4" alt="Nature 4">
+                    <div class="slide-content">
+                        <h2>Ocean Waves</h2>
+                        <p>Feel the breeze</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="slider-btn prev" aria-label="Previous slide">❮</button>
+            <button class="slider-btn next" aria-label="Next slide">❯</button>
+
+            <div class="slider-dots"></div>
+        </div>
+
+        <div class="controls">
+            <button id="autoplay" class="control-btn">Start Autoplay</button>
+            <div class="speed-control">
+                <label for="speed">Speed:</label>
+                <input type="range" id="speed" min="2000" max="5000" value="3000" step="500">
+                <span id="speed-value">3s</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.querySelector('.slider');
+    const slides = document.querySelectorAll('.slide');
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    const dotsContainer = document.querySelector('.slider-dots');
+    const autoplayButton = document.getElementById('autoplay');
+    const speedInput = document.getElementById('speed');
+    const speedValue = document.getElementById('speed-value');
+
+    let currentSlide = 0;
+    let autoplayInterval = null;
+    const totalSlides = slides.length;
+
+    // Create dots
+    slides.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.dot');
+
+    // Update slider position
+    function updateSlider() {
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        // Update dots
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    }
+
+    // Go to specific slide
+    function goToSlide(index) {
+        currentSlide = index;
+        if (currentSlide < 0) currentSlide = totalSlides - 1;
+        if (currentSlide >= totalSlides) currentSlide = 0;
+        updateSlider();
+    }
+
+    // Navigation functions
+    function nextSlide() {
+        goToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+        goToSlide(currentSlide - 1);
+    }
+
+    // Autoplay functions
+    function startAutoplay() {
+        if (autoplayInterval) return;
+        autoplayInterval = setInterval(nextSlide, speedInput.value);
+        autoplayButton.textContent = 'Stop Autoplay';
+    }
+
+    function stopAutoplay() {
+        if (!autoplayInterval) return;
+        clearInterval(autoplayInterval);
+        autoplayInterval = null;
+        autoplayButton.textContent = 'Start Autoplay';
+    }
+
+    // Event listeners
+    prevButton.addEventListener('click', () => {
+        prevSlide();
+        stopAutoplay();
+    });
+
+    nextButton.addEventListener('click', () => {
+        nextSlide();
+        stopAutoplay();
+    });
+
+    autoplayButton.addEventListener('click', () => {
+        if (autoplayInterval) {
+            stopAutoplay();
+        } else {
+            startAutoplay();
+        }
+    });
+
+    speedInput.addEventListener('input', () => {
+        const value = speedInput.value / 1000;
+        speedValue.textContent = `${value}s`;
+        if (autoplayInterval) {
+            stopAutoplay();
+            startAutoplay();
+        }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') prevSlide();
+        if (e.key === 'ArrowRight') nextSlide();
+        if (e.key === 'Space') {
+            e.preventDefault();
+            if (autoplayInterval) stopAutoplay(); else startAutoplay();
+        }
+    });
+
+    // Touch events for swipe
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    slider.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+
+    slider.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) nextSlide();
+        if (touchEndX - touchStartX > 50) prevSlide();
+    });
+});
+    </script>
+</body>
+</html>

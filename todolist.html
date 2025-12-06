@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List | Sneha Verma</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #f5f7fa;
+            padding: 30px;
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            background: #ffffff;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: 600;
+            color: #333;
+            border: 1px solid #ddd;
+            transition: 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #333;
+            color: #fff;
+        }
+
+        /* Container */
+        .container {
+            max-width: 450px;
+            margin: auto;
+            padding: 25px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        /* Input Section */
+        .todo-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .todo-input input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .todo-input button {
+            padding: 12px 20px;
+            background: #4CAF50;
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .todo-input button:hover {
+            background: #43a047;
+        }
+
+        /* Task List */
+        #taskList {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        #taskList li {
+            background: #f9f9f9;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #4CAF50;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #taskList li span {
+            font-size: 16px;
+        }
+
+        .delete-btn {
+            background: #ff5252;
+            border: none;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #e04848;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Back to Projects Button -->
+    <a href="index.html" class="back-btn">← Back to Projects</a>
+
+    <div class="container">
+        <h1>📝 To-Do List</h1>
+
+        <div class="todo-input">
+            <input type="text" id="taskInput" placeholder="Enter a task...">
+            <button id="addBtn">Add</button>
+        </div>
+
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        const taskInput = document.getElementById("taskInput");
+        const addBtn = document.getElementById("addBtn");
+        const taskList = document.getElementById("taskList");
+
+        addBtn.addEventListener("click", () => {
+            const taskText = taskInput.value.trim();
+
+            if (taskText === "") {
+                alert("Please enter a task!");
+                return;
+            }
+
+            const li = document.createElement("li");
+
+            li.innerHTML = `
+                <span>${taskText}</span>
+                <button class="delete-btn">Delete</button>
+            `;
+
+            taskList.appendChild(li);
+            taskInput.value = "";
+
+            li.querySelector(".delete-btn").addEventListener("click", () => {
+                li.remove();
+            });
+        });
+
+        // Enter key support
+        taskInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") addBtn.click();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expense Tracker | Sneha Verma</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f5f7fa;
+    padding: 30px;
+}
+
+.container {
+    max-width: 450px;
+    margin: auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    background: #ffffff;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    color: #333;
+    border: 1px solid #ddd;
+    transition: 0.3s ease;
+}
+
+.back-btn:hover {
+    background: #333;
+    color: #fff;
+}
+
+/* Form */
+.expense-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.expense-form input, .expense-form select {
+    flex: 1;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.expense-form button {
+    padding: 12px 20px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.expense-form button:hover {
+    background: #43a047;
+}
+
+/* Summary */
+.summary {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.summary div {
+    background: #f0f0f5;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+    margin-right: 10px;
+}
+
+.summary div:last-child { margin-right: 0; }
+
+.summary div span {
+    display: block;
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+/* Expense List */
+#expenseList {
+    list-style: none;
+}
+
+#expenseList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    border-left: 4px solid #4CAF50;
+}
+
+.delete-btn {
+    background: #ff5252;
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.delete-btn:hover {
+    background: #e04848;
+}
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-btn">← Back to Projects</a>
+
+<div class="container">
+    <h1>💰 Expense Tracker</h1>
+
+    <div class="expense-form">
+        <input type="text" id="expenseName" placeholder="Expense Name">
+        <input type="number" id="expenseAmount" placeholder="Amount">
+        <button id="addExpenseBtn">Add</button>
+    </div>
+
+    <div class="summary">
+        <div>Total Expenses<span id="totalExpenses">0</span></div>
+        <div>Transactions<span id="totalCount">0</span></div>
+    </div>
+
+    <ul id="expenseList"></ul>
+</div>
+
+<script>
+const expenseName = document.getElementById('expenseName');
+const expenseAmount = document.getElementById('expenseAmount');
+const addExpenseBtn = document.getElementById('addExpenseBtn');
+const expenseList = document.getElementById('expenseList');
+const totalExpenses = document.getElementById('totalExpenses');
+const totalCount = document.getElementById('totalCount');
+
+let expenses = [];
+
+function renderExpenses() {
+    expenseList.innerHTML = '';
+    let total = 0;
+    expenses.forEach((expense, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <span>${expense.name}: ₹${expense.amount}</span>
+            <button class="delete-btn" onclick="deleteExpense(${index})">Delete</button>
+        `;
+        expenseList.appendChild(li);
+        total += expense.amount;
+    });
+
+    totalExpenses.textContent = total;
+    totalCount.textContent = expenses.length;
+}
+
+function deleteExpense(index) {
+    expenses.splice(index, 1);
+    renderExpenses();
+}
+
+addExpenseBtn.addEventListener('click', () => {
+    const name = expenseName.value.trim();
+    const amount = parseFloat(expenseAmount.value);
+
+    if(name === '' || isNaN(amount) || amount <= 0) {
+        alert('Please enter valid expense name and amount!');
+        return;
+    }
+
+    expenses.push({name, amount});
+    expenseName.value = '';
+    expenseAmount.value = '';
+    renderExpenses();
+});
+
+// Enter key support
+expenseAmount.addEventListener('keypress', (e) => {
+    if(e.key === "Enter") addExpenseBtn.click();
+});
+expenseName.addEventListener('keypress', (e) => {
+    if(e.key === "Enter") addExpenseBtn.click();
+});
+</script>
+
+</body>
+</html>

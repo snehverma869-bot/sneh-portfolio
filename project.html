@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LearnHub – Professional Online Courses</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ---------- GLOBAL STYLING ---------- */
+* { box-sizing: border-box; margin:0; padding:0; }
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    transition: 0.4s;
+}
+
+/* ---------- HEADER ---------- */
+header {
+    background: linear-gradient(90deg,rgb(87, 115, 209),rgb(250, 228, 228));
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
+}
+
+/* Gradient animation */
+@keyframes gradientBG {
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* Back to Projects button */
+.back-project {
+    display: inline-block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background: linear-gradient(45deg,#7d5555,#c48b8b);
+    color: white;
+    font-weight: 600;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.back-project:hover{
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(179, 132, 132, 0.6);
+}
+
+/* ---------- SEARCH BAR ---------- */
+.search-section {
+    display: flex;
+    justify-content: center;
+    padding: 25px;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.search-section input {
+    width: 300px;
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.search-section input:focus {
+    box-shadow: 0 4px 20px rgba(255,74,74,0.4);
+}
+
+.search-section button {
+    padding: 12px 25px;
+    border: none;
+    background: linear-gradient(45deg,#8b646d,#8b617b);
+    color: white;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.search-section button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 18px rgba(255,74,74,0.5);
+}
+
+/* ---------- COURSE CONTAINER ---------- */
+.course-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+    gap: 25px;
+    padding: 20px;
+}
+
+/* ---------- COURSE CARD ---------- */
+.course-card {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(198, 114, 114, 0.1);
+    transition: 0.5s;
+    position: relative;
+    transform: translateY(0);
+    animation: floatCard 4s ease-in-out infinite;
+}
+
+@keyframes floatCard{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
+}
+
+.course-card:hover {
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+.course-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.course-card:hover .course-img {
+    transform: scale(1.08);
+}
+
+.course-card h3 {
+    padding: 15px 15px 5px;
+    font-size: 20px;
+}
+
+.course-card p {
+    padding: 0 15px 15px;
+    color: #555;
+    font-weight: 500;
+}
+
+.course-card .level-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(76, 51, 134, 0.85);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* Buttons */
+.course-card button {
+    padding: 10px;
+    width: 45%;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.course-card .enroll-btn {
+    background: linear-gradient(45deg,#35577d,#647570);
+    color:white;
+}
+
+.course-card .enroll-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 18px rgba(40,167,69,0.6);
+}
+
+.course-card .delete-btn {
+    background: #88a18e;
+    color:white;
+}
+
+.course-card .delete-btn:hover{
+    transform: scale(1.08);
+    box-shadow: 0 6px 18px rgba(255,74,74,0.6);
+}
+
+/* ---------- ADMIN PANEL ---------- */
+.admin-box {
+    max-width: 380px;
+    margin: 25px auto;
+    padding: 20px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.admin-box h3 { text-align:center; margin-bottom:15px; }
+
+.admin-box input, .admin-box select {
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    border-radius:12px;
+    border:1px solid #ccc;
+    outline:none;
+}
+
+.admin-box input:focus, .admin-box select:focus{
+    border-color:#28a745;
+    box-shadow:0 0 10px rgba(40,167,69,0.3);
+}
+
+/* ---------- POPUP ---------- */
+.popup-overlay{
+    position:fixed;
+    inset:0;
+    background: rgba(0,0,0,0.5);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:2000;
+}
+
+.popup-box{
+    width:360px;
+    background:rgba(255,255,255,0.25);
+    backdrop-filter:blur(15px);
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    text-align:center;
+}
+
+.popup-box input, .popup-box select{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:12px;
+    border:1px solid #ccc;
+}
+
+.popup-box button{
+    padding:12px;
+    border-radius:12px;
+    border:none;
+    cursor:pointer;
+    margin-top:10px;
+    font-weight:600;
+}
+
+.popup-box .confirm-btn{
+    background: linear-gradient(45deg,#28a745,#20c997);
+    color:white;
+}
+
+.popup-box .confirm-btn:hover{
+    transform: scale(1.05);
+    box-shadow:0 6px 18px rgba(40,167,69,0.6);
+}
+
+.popup-box .close-btn{
+    background:#ff4a4a;
+    color:white;
+}
+
+.popup-box .close-btn:hover{
+    transform: scale(1.05);
+    box-shadow:0 6px 18px rgba(255,74,74,0.6);
+}
+
+/* ---------- TOAST ---------- */
+.toast{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:linear-gradient(45deg,#28a745,#20c997);
+    color:white;
+    padding:12px 25px;
+    border-radius:12px;
+    opacity:0;
+    pointer-events:none;
+    transition:all 0.5s;
+    z-index:3000;
+}
+
+.toast.show{
+    opacity:1;
+    pointer-events:auto;
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
+</style>
+</head>
+
+<body>
+
+<header>LearnHub – Online Courses</header>
+
+<!-- Back to Project -->
+<div style="text-align:center; margin:15px;">
+    <a href="index.html" class="back-project">← Back to Projects</a>
+</div>
+
+<section class="search-section">
+    <input type="text" id="searchInput" placeholder="Search courses..." oninput="searchCourse()"/>
+    <button onclick="sortCourses()">Sort by Level</button>
+</section>
+
+<div class="admin-box">
+    <h3>Add New Course (Admin)</h3>
+    <input type="text" id="courseTitle" placeholder="Course Title" />
+    <select id="courseLevel">
+        <option value="Beginner">Beginner</option>
+        <option value="Intermediate">Intermediate</option>
+        <option value="Advanced">Advanced</option>
+    </select>
+    <input type="text" id="courseImage" placeholder="Image URL" />
+    <button onclick="addCourse()" style="width:100%; background:linear-gradient(45deg,#28a745,#20c997); color:white;">Add Course</button>
+</div>
+
+<section id="courseContainer" class="course-container"></section>
+
+<h2 style="text-align:center; margin-top:20px;">My Enrolled Courses</h2>
+<section id="enrolledContainer" class="course-container"></section>
+
+<div id="popup" class="popup-overlay">
+    <div class="popup-box">
+        <h3 id="popupCourseName"></h3>
+        <input type="text" id="userName" placeholder="Enter your name">
+        <input type="email" id="userEmail" placeholder="Enter your email">
+        <select id="paymentMethod">
+            <option value="">Select Payment Method</option>
+            <option>Credit / Debit Card</option>
+            <option>JazzCash</option>
+            <option>Easypaisa</option>
+            <option>Google Pay</option>
+            <option>PayPal</option>
+        </select>
+        <button class="confirm-btn" onclick="confirmEnrollment()">Confirm Enrollment</button>
+        <button class="close-btn" onclick="closePopup()">Cancel</button>
+    </div>
+</div>
+
+<div id="toast" class="toast">Enrollment Successful!</div>
+
+<script>
+// ---------- DATA ----------
+let courses = [
+    { title: "HTML for Beginners", level: "Beginner", image: "images/html.jpg" },
+    { title: "CSS Complete Guide", level: "Beginner", image: "images/css.png" },
+    { title: "JavaScript Basics", level: "Intermediate", image: "images/js.jpg" },
+    { title: "Responsive Web Design", level: "Intermediate", image: "images/web.webp" },
+    { title: "React JS Fundamentals", level: "Advanced", image: "images/react.jpg" }
+];
+let enrolledCourses = [];
+let selectedCourse = "";
+
+// ---------- LOAD COURSES ----------
+function loadCourses(list) {
+    const container = document.getElementById("courseContainer");
+    container.innerHTML = "";
+    list.forEach((course,index)=>{
+        container.innerHTML += `
+        <div class="course-card">
+            <span class="level-badge">${course.level}</span>
+            <img src="${course.image}" class="course-img">
+            <h3>${course.title}</h3>
+            <p>Level: ${course.level}</p>
+            <button class="enroll-btn" onclick="openPopup('${course.title}')">Enroll</button>
+            <button class="delete-btn" onclick="deleteCourse(${index})">Delete</button>
+        </div>`;
+    });
+}
+
+// ---------- SEARCH ----------
+function searchCourse(){
+    const query = document.getElementById("searchInput").value.toLowerCase();
+    const filtered = courses.filter(c => c.title.toLowerCase().includes(query));
+    loadCourses(filtered);
+}
+
+// ---------- SORT ----------
+function sortCourses(){
+    const order = ["Beginner","Intermediate","Advanced"];
+    courses.sort((a,b)=> order.indexOf(a.level)-order.indexOf(b.level));
+    loadCourses(courses);
+}
+
+// ---------- ADD COURSE ----------
+function addCourse(){
+    const title = document.getElementById("courseTitle").value.trim();
+    const level = document.getElementById("courseLevel").value;
+    const image = document.getElementById("courseImage").value.trim();
+    if(!title || !image){ alert("Please fill all fields!"); return; }
+    courses.push({title,level,image});
+    loadCourses(courses);
+    document.getElementById("courseTitle").value="";
+    document.getElementById("courseImage").value="";
+}
+
+// ---------- DELETE COURSE ----------
+function deleteCourse(index){
+    if(confirm("Are you sure to delete this course?")){
+        courses.splice(index,1);
+        loadCourses(courses);
+    }
+}
+
+// ---------- POPUP ----------
+function openPopup(courseName){
+    selectedCourse = courseName;
+    document.getElementById("popupCourseName").innerText="Enroll in: "+courseName;
+    document.getElementById("popup").style.display="flex";
+}
+function closePopup(){ document.getElementById("popup").style.display="none"; }
+
+// ---------- ENROLL ----------
+function confirmEnrollment(){
+    const name = document.getElementById("userName").value.trim();
+    const email = document.getElementById("userEmail").value.trim();
+    const payment = document.getElementById("paymentMethod").value;
+    if(!name || !email || !payment){ alert("Please fill all fields!"); return; }
+
+    const course = courses.find(c=>c.title===selectedCourse);
+    if(!enrolledCourses.includes(course)){ enrolledCourses.push(course); loadEnrolledCourses(); }
+
+    showToast("Enrollment Successful! "+selectedCourse);
+    closePopup();
+    document.getElementById("userName").value="";
+    document.getElementById("userEmail").value="";
+    document.getElementById("paymentMethod").value="";
+}
+
+// ---------- LOAD ENROLLED ----------
+function loadEnrolledCourses(){
+    const container = document.getElementById("enrolledContainer");
+    container.innerHTML="";
+    enrolledCourses.forEach(course=>{
+        container.innerHTML+=`
+        <div class="course-card">
+            <span class="level-badge">${course.level}</span>
+            <img src="${course.image}" class="course-img">
+            <h3>${course.title}</h3>
+            <p>Level: ${course.level}</p>
+        </div>`;
+    });
+}
+
+// ---------- TOAST ----------
+function showToast(message){
+    const toast = document.getElementById("toast");
+    toast.innerText=message;
+    toast.classList.add("show");
+    setTimeout(()=>{ toast.classList.remove("show"); },3000);
+}
+
+// ---------- INITIAL LOAD ----------
+loadCourses(courses);
+</script>
+</body>
+</html>
